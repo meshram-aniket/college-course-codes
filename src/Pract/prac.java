@@ -6,15 +6,12 @@ public class prac {
     static class Node {
         Node[] children;
         boolean eow;
-        Node()  {
+        Node() {
             children = new Node[26];
-            for (int i = 0; i < 26; i++) {
-                children[i] = null;
-            }
             eow = false;
         }
-    }
 
+    }
 
     static Node root = new Node();
     public static void insert(String word) {
@@ -27,7 +24,6 @@ public class prac {
                 curr.children[ind] = new Node();
             }
 
-
             if (i == word.length() - 1) {
                 curr.children[ind].eow = true;
             }
@@ -37,18 +33,18 @@ public class prac {
     }
 
 
-    public static boolean searching(String word) {
+
+    public static boolean search(String key) {
         Node curr = root;
 
-        for (int i = 0; i < word.length(); i++) {
-            int ind = word.charAt(i) - 'a';
+        for (int i = 0; i < key.length(); i++) {
+            int ind = key.charAt(i) - 'a';
 
             if (curr.children[ind] == null) {
                 return false;
             }
 
-
-            if (i == word.length() - 1 && curr.children[ind].eow == false) {
+            if (i == key.length() - 1 && curr.children[ind].eow == false) {
                 return false;
             }
 
@@ -58,23 +54,7 @@ public class prac {
     }
 
 
-
-    public static boolean startWith(String prefix) {
-        Node curr = root;
-
-        for (int i = 0; i < prefix.length(); i++) {
-            int ind = prefix.charAt(i) - 'a';
-
-            if (curr.children[ind] == null) {
-                return false;
-            }
-            curr = curr.children[ind];
-        }
-        return true;
-    }
-
-
-    public static int count(Node root) {
+    public static int countNode(Node root) {
         if (root == null) {
             return 0;
         }
@@ -82,39 +62,46 @@ public class prac {
         int count = 0;
         for (int i = 0; i < 26; i++) {
             if (root.children[i] != null) {
-                count += count(root.children[i]);
+                count += countNode(root.children[i]);
             }
         }
         return count + 1;
+
+
     }
 
 
+    public static boolean startWith(String key) {
+        Node curr = root;
+
+        for (int i = 0; i < key.length(); i++) {
+            int ind = key.charAt(i) - 'a';
+
+            if (curr.children[ind] == null) {
+                return false;
+            }
+
+            curr = curr.children[ind];
+
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
-//        String[] words = {"the", "their", "there", "a", "any"};
+//        String[] words = {"banana", "apple", "orange", "watermelen"};
 //        for (int i = 0; i < words.length; i++) {
 //            insert(words[i]);
 //        }
 //
-//        System.out.println(searching("ther"));
+////        System.out.println(search("banan"));
+//        System.out.println(startWith("man"));
 
-
-        String[] words = {"apple", "app", "women", "man", "mango"};
-
-        for (int i = 0; i < words.length; i++) {
-            insert(words[i]);
+        String ans = "apple";
+        for (int i = 0; i < ans.length(); i++) {
+            insert(ans.substring(i));
         }
 
-        System.out.println(startWith("apple"));
-
-//        String str = "apple";
-//        for (int i = 0; i < str.length(); i++) {
-//            insert(str.substring(i));
-//        }
-//
-//        System.out.println(count(root));
+        System.out.println(countNode(root));
     }
-
-
-
 }

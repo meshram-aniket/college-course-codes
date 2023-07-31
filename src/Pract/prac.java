@@ -54,7 +54,45 @@ public class prac {
     }
 
 
-    public static int countNode(Node root) {
+    public static boolean delete(String key) {
+        Node curr = root;
+
+        for (int i = 0; i < key.length(); i++) {
+            int ind = key.charAt(i) - 'a';
+
+            if (curr.children[ind] == null) {
+                return false;
+            }
+
+            if (i == key.length() - 1 && curr.children[ind].eow == true) {
+                curr.children[ind].eow = false;
+            }
+            curr = curr.children[ind];
+        }
+        return true;
+
+    }
+
+
+
+    public static boolean wordBreak(String key) {
+        if (key.length() == 0) {
+            return true;
+        }
+
+        for (int i = 1; i <= key.length(); i++) {
+            String first = key.substring(0, i);
+            String second = key.substring(i);
+            if (search(first) && wordBreak(second)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+    public static int countNode (Node root) {
         if (root == null) {
             return 0;
         }
@@ -66,9 +104,10 @@ public class prac {
             }
         }
         return count + 1;
-
-
     }
+
+
+
 
 
     public static boolean startWith(String key) {
@@ -89,19 +128,35 @@ public class prac {
 
 
     public static void main(String[] args) {
-//        String[] words = {"banana", "apple", "orange", "watermelen"};
+        String[] words = {"banana", "apple", "orange", "watermelen"};
+        for (int i = 0; i < words.length; i++) {
+            insert(words[i]);
+        }
+
+        System.out.println(search("banana"));
+        System.out.println("delete the item: " + delete("orange"));
+        System.out.println("found the element: " + search("orange"));
+//        System.out.println(startWith("man"));
+//
+//        String ans = "aniket";
+//        for (int i = 0; i < ans.length(); i++) {
+//            insert(ans.substring(i));
+//        }
+//
+//        System.out.println(countNode(root));
+
+//        String[] words = {"i", "like", "samsung", "sung", "ilik"};
 //        for (int i = 0; i < words.length; i++) {
 //            insert(words[i]);
 //        }
 //
-////        System.out.println(search("banan"));
-//        System.out.println(startWith("man"));
-
-        String ans = "apple";
-        for (int i = 0; i < ans.length(); i++) {
-            insert(ans.substring(i));
-        }
-
-        System.out.println(countNode(root));
+//        String key = "ilikesamsung";
+//        System.out.println(wordBreak(key));
+//
+//        String ans = "aniket";
+//        for (int i = 1; i <= ans.length(); i++) {
+//            System.out.println(ans.substring(0, i));
+//            System.out.println(ans.substring(i));
+//        }
     }
 }
